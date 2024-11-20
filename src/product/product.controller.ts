@@ -25,17 +25,17 @@ export class ProductController {
     }
   
     @Put('update')
-    async UpdateToDoController(@Body() data: UpdateProductDTO) {
+    async UpdateProductController(@Body() data: UpdateProductDTO) {
       return this.productService.UpdateToDo(data);
     }
   
     @Delete('delete/:id')
-    async DeleteToDoController(@Param('id') id: string) {
+    async DeleteProductController(@Param('id') id: string) {
       return this.productService.DeleteToDo(id);
     }
   
     @Get(':productId')
-    async GetToDoController(
+    async GetProductController(
       @Query('productid') productId?: string,
     ) {
       return this.productService.GetOneProductOrAll(productId);
