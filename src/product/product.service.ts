@@ -23,8 +23,6 @@ export class ProductService {
           min:data.minSize,
 
           categoryId:data.categoryId,
-
-
         },
        
       });
@@ -70,7 +68,9 @@ export class ProductService {
         return this.prismaService.product.findFirst({ where: { id: productId } });
       } 
       return this.prismaService.product;
-    } catch (error) {}
+    } catch (error) {
+      return error;
+    }
   }
 
 }

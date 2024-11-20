@@ -15,12 +15,10 @@ export class CreateProductDTO{
 
     @IsNotEmpty()
     @IsInt()
-    @MaxLength(50)
     priceDef: number;
 
     @IsNotEmpty()
     @IsInt()
-    @MaxLength(50)
     priceNDS: number;
 
     @IsNotEmpty()

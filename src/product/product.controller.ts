@@ -40,6 +40,4 @@ export class ProductController {
     ) {
       return this.productService.GetOneProductOrAll(productId);
     }
-  
-
 }
