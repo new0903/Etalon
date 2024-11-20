@@ -10,7 +10,7 @@ export class ProductService {
   constructor(private readonly prismaService: PrismaService) {}
 
   //Здесь находится вся логика с ToDo карточками
-  async CreateToDo(data: CreateProductDTO) {
+  async CreateProduct(data: CreateProductDTO) {
     try {
         var product= await this.prismaService.product.create({
         data: {
@@ -34,7 +34,7 @@ export class ProductService {
     }
   }
 
-  async UpdateToDo(data: UpdateProductDTO) {
+  async UpdateProduct(data: UpdateProductDTO) {
     try {
       return await this.prismaService.product.update({
         where: { id: data.id },
@@ -55,7 +55,7 @@ export class ProductService {
     }
   }
 
-  async DeleteToDo(id: string) {
+  async DeleteProduct(id: string) {
     try {
       await this.prismaService.product.delete({ where: { id: id } });
       return HttpStatus.OK;

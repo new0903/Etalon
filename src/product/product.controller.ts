@@ -21,17 +21,17 @@ export class ProductController {
 
     @Post('create')
     async CreateProductController(@Body() data: CreateProductDTO) {
-      return this.productService.CreateToDo(data);
+      return this.productService.CreateProduct(data);
     }
   
     @Put('update')
     async UpdateProductController(@Body() data: UpdateProductDTO) {
-      return this.productService.UpdateToDo(data);
+      return this.productService.UpdateProduct(data);
     }
   
     @Delete('delete/:id')
     async DeleteProductController(@Param('id') id: string) {
-      return this.productService.DeleteToDo(id);
+      return this.productService.DeleteProduct(id);
     }
   
     @Get(':productId')
