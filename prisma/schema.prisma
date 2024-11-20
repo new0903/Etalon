@@ -54,10 +54,11 @@ model Product {
   priceDef     Int
   priceNDS     Int
   inStock     Int
+  min       Int
+  max       Int
   category      Category     @relation(fields: [categoryId], references: [id], onDelete: Cascade)
   categoryId    String   @map("category_id")
   properties      Properties[]
-  propertiesSizes  PropertiesSizes[]
   ImgUrls  ProductImage[]
   historyProductsUser  HistoryProductsUser[]
   shopCartUser         shopCartUser[]
@@ -75,13 +76,6 @@ model Properties  {
   value     String
   product      Product     @relation(fields: [productId], references: [id], onDelete: Cascade)
   productId    String   @map("product_id")
-}
-model PropertiesSizes  {
-  id        String   @id @default(uuid())
-  min       Int
-  max       Int
-  product   Product     @relation(fields: [productId], references: [id], onDelete: Cascade)
-  productId String   @map("product_id")
 }
 
 model shopCartUser  {

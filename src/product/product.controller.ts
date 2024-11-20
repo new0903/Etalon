@@ -1,58 +1,45 @@
+
 import {
-  Body,
-  Controller,
-  Delete,
-  Get,
-  Param,
-  Post,
-  Put,
-  Query,
-} from '@nestjs/common';
-import { TodoService } from './todo.service';
-import { CreateToDoDTO } from './dto/create.todo.dto';
-import { UpdateToDoDTO } from './dto/update.todo.dto';
-import { CreateUserDTO } from './dto/create.user.dto';
-import { User } from '@prisma/client';
+    Body,
+    Controller,
+    Delete,
+    Get,
+    Param,
+    Post,
+    Put,
+    Query,
+  } from '@nestjs/common';
+  import { ProductService } from './product.service';
+import { UpdateProductDTO } from './dto/update.product.tdo';
+import { CreateProductDTO } from './dto/create.product.tdo';
+  
 
-@Controller('todo')
+
+@Controller('product')
 export class ProductController {
-  constructor(private readonly todoService: TodoService) {}
+    constructor(private readonly productService: ProductService) {}
 
-  @Post('create/user')
-  async CreateUserController(@Body() data: CreateUserDTO) {
-    return this.todoService.CreateUser(data.vkId);
-  }
+    @Post('create')
+    async CreateToDoController(@Body() data: CreateProductDTO) {
+      return this.productService.CreateToDo(data);
+    }
+  
+    @Put('update')
+    async UpdateToDoController(@Body() data: UpdateProductDTO) {
+      return this.productService.UpdateToDo(data);
+    }
+  
+    @Delete('delete/:id')
+    async DeleteToDoController(@Param('id') id: string) {
+      return this.productService.DeleteToDo(id);
+    }
+  
+    @Get(':productId')
+    async GetToDoController(
+      @Query('productid') productId?: string,
+    ) {
+      return this.productService.GetOneProductOrAll(productId);
+    }
+  
 
-  @Post('create')
-  async CreateToDoController(@Body() data: CreateToDoDTO) {
-    return this.todoService.CreateToDo(data);
-  }
-
-  @Put('update')
-  async UpdateToDoController(@Body() data: UpdateToDoDTO) {
-    return this.todoService.UpdateToDo(data);
-  }
-
-  @Delete('delete/:id')
-  async DeleteToDoController(@Param('id') id: string) {
-    return this.todoService.DeleteToDo(id);
-  }
-
-  @Get(':userid')
-  async GetToDoController(
-    @Param('userid') id: string,
-    @Query('todoid') todoId?: string,
-  ) {
-    return this.todoService.GetOneTodoOrAll(id, todoId);
-  }
-
-  @Get('user/:id')
-  async GetUserByVkID(@Param('id') id: string) {
-    return this.todoService.GetUser(id);
-  }
-
-  @Post('user/controll')
-  async UserControllController(@Body() data: CreateUserDTO){
-    return this.todoService.UserController(data.vkId)
-  }
 }
