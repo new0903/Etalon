@@ -1,12 +1,7 @@
 
-import { IsEnum, IsNotEmpty, IsString, MaxLength, MinLength, IsOptional, IsUrl, IsInt,IsArray,ArrayMinSize  } from "class-validator"
-import { CreatePropertiesDTO } from "./create.productProperties.tdo" 
-export class UpdateProductDTO{
+import { IsEnum, IsNotEmpty, IsString, MaxLength, MinLength, IsOptional, IsUrl, IsInt,IsArray,ArrayMinSize,IsObject } from "class-validator"
 
-    @IsNotEmpty()
-    @IsInt()
-    @MaxLength(3000)
-    id: string;
+export class CreateProductDTO{
 
     @IsNotEmpty()
     @IsString()
@@ -19,12 +14,12 @@ export class UpdateProductDTO{
     article: string;
 
     @IsNotEmpty()
-    @IsString()
+    @IsInt()
     @MaxLength(50)
     priceDef: number;
 
     @IsNotEmpty()
-    @IsString()
+    @IsInt()
     @MaxLength(50)
     priceNDS: number;
 
@@ -44,12 +39,7 @@ export class UpdateProductDTO{
     @IsString()
     categoryId: string;
 
-    
-    @IsOptional()
-    @IsUrl()
-    ImgUrls: string;
-
-    @IsArray()
-    @ArrayMinSize(1)
-    properties: CreatePropertiesDTO[];
+    @IsString()
+    @MaxLength(50)
+    properties: string;
 }

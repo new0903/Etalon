@@ -1,17 +1,17 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
-import { CreateProductDTO } from './dto/create.product.tdo';
-import { UpdateProductDTO } from './dto/update.product.tdo';
+import { CreateProductDTO } from './dto/create.product.dto';
+import { UpdateProductDTO } from './dto/update.product.dto';
 
 
 @Injectable()
 export class ProductService {
-     //Подключаем к нашему сервису prismaService
   constructor(private readonly prismaService: PrismaService) {}
 
-  //Здесь находится вся логика с ToDo карточками
-  async CreateProduct(data: CreateProductDTO) {
+  async CreateProduct(data: CreateProductDTO, files) {
     try {
+
+        const response =files[0].filename;
         var product= await this.prismaService.product.create({
         data: {
           title: data.title,
@@ -19,10 +19,11 @@ export class ProductService {
           inStock: data.inStock,
           priceDef: data.priceDef,
           priceNDS: data.priceNDS,
+          ImgUrls:response,
           max:data.maxSize,
           min:data.minSize,
-
           categoryId:data.categoryId,
+          properties:data.properties
 
 
         },
@@ -34,8 +35,9 @@ export class ProductService {
     }
   }
 
-  async UpdateProduct(data: UpdateProductDTO) {
+  async UpdateProduct(data: UpdateProductDTO, files) {
     try {
+      const response =files[0].filename;
       return await this.prismaService.product.update({
         where: { id: data.id },
         data: {
@@ -45,9 +47,11 @@ export class ProductService {
           inStock: data.inStock,
           priceDef: data.priceDef,
           priceNDS: data.priceNDS,
-          categoryId:data.categoryId,
+          ImgUrls:response,
           max:data.maxSize,
           min:data.minSize,
+          categoryId:data.categoryId,
+          properties:data.properties
         },
       });
     } catch (error) {
@@ -69,7 +73,7 @@ export class ProductService {
       if (productId) {
         return this.prismaService.product.findFirst({ where: { id: productId } });
       } 
-      return this.prismaService.product;
+      return this.prismaService.product.findMany();
     } catch (error) {}
   }
 
