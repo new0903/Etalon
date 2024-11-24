@@ -37,6 +37,17 @@ CREATE TABLE `Category` (
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- CreateTable
+CREATE TABLE `storyOrders` (
+    `id` VARCHAR(191) NOT NULL,
+    `title` VARCHAR(191) NOT NULL,
+    `article` VARCHAR(191) NOT NULL,
+    `priceDef` INTEGER NOT NULL,
+    `ImgUrls` VARCHAR(191) NOT NULL,
+
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
 CREATE TABLE `Product` (
     `id` VARCHAR(191) NOT NULL,
     `created_at` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
@@ -47,6 +58,8 @@ CREATE TABLE `Product` (
     `priceDef` INTEGER NOT NULL,
     `priceNDS` INTEGER NOT NULL,
     `inStock` INTEGER NOT NULL,
+    `min` INTEGER NOT NULL,
+    `max` INTEGER NOT NULL,
     `category_id` VARCHAR(191) NOT NULL,
 
     PRIMARY KEY (`id`)
@@ -66,16 +79,6 @@ CREATE TABLE `Properties` (
     `id` VARCHAR(191) NOT NULL,
     `key` VARCHAR(191) NOT NULL,
     `value` VARCHAR(191) NOT NULL,
-    `product_id` VARCHAR(191) NOT NULL,
-
-    PRIMARY KEY (`id`)
-) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-
--- CreateTable
-CREATE TABLE `PropertiesSizes` (
-    `id` VARCHAR(191) NOT NULL,
-    `min` INTEGER NOT NULL,
-    `max` INTEGER NOT NULL,
     `product_id` VARCHAR(191) NOT NULL,
 
     PRIMARY KEY (`id`)
@@ -111,9 +114,6 @@ ALTER TABLE `ProductImage` ADD CONSTRAINT `ProductImage_product_id_fkey` FOREIGN
 
 -- AddForeignKey
 ALTER TABLE `Properties` ADD CONSTRAINT `Properties_product_id_fkey` FOREIGN KEY (`product_id`) REFERENCES `Product`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE `PropertiesSizes` ADD CONSTRAINT `PropertiesSizes_product_id_fkey` FOREIGN KEY (`product_id`) REFERENCES `Product`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `shopCartUser` ADD CONSTRAINT `shopCartUser_product_id_fkey` FOREIGN KEY (`product_id`) REFERENCES `Product`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
