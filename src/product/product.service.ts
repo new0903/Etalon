@@ -55,6 +55,10 @@ export class ProductService {
   async UpdateProduct(data: UpdateProductDTO, files) {
     try {
      // const response = files[0].filename;
+      let filePath=(await this.prismaService.product.findFirst({ where: { id:  data.id } })).ImgUrls;
+      if (files.length>0) {
+        filePath=join(__dirname, '..', '..', 'uploads',files[0].filename)
+      }
       return await this.prismaService.product.update({
         where: { id: data.id },
         data: {
@@ -64,7 +68,7 @@ export class ProductService {
           inStock: data.inStock,
           priceDef: data.priceDef,
           priceNDS: data.priceNDS,
-          ImgUrls: join(__dirname, '..', '..', 'uploads',files[0].filename),//response,
+          ImgUrls: filePath,//response,
           max: data.maxSize,
           min: data.minSize,
           categoryId: data.categoryId,
