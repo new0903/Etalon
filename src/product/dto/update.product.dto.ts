@@ -1,10 +1,11 @@
 
-import { IsEnum, IsNotEmpty, IsString, MaxLength, MinLength, IsOptional, IsUrl, IsInt,IsArray,ArrayMinSize,IsObject  } from "class-validator"
+import { IsEnum, IsNotEmpty, IsString, MaxLength, MinLength, IsOptional, IsUrl, IsInt,IsArray,ArrayMinSize,IsObject, isInt  } from "class-validator"
+import { Type } from "class-transformer";
 
 export class UpdateProductDTO{
 
     @IsNotEmpty()
-    @IsInt()
+    @IsString()
     @MaxLength(3000)
     id: string;
 
@@ -18,26 +19,32 @@ export class UpdateProductDTO{
     @MaxLength(50)
     article: string;
 
-    @IsNotEmpty()
-    @IsString()
-    @MaxLength(50)
+    // @IsNotEmpty()
+    @IsInt()
+     @Type(() => Number)
     priceDef: number;
 
-    @IsNotEmpty()
-    @IsString()
-    @MaxLength(50)
+    // @IsNotEmpty()
+    // @IsString()
+    @IsInt()
+     @Type(() => Number)
     priceNDS: number;
 
-    @IsNotEmpty()
+    // @IsNotEmpty()
+    // @IsInt()
     @IsInt()
+     @Type(() => Number)
     inStock: number;
 
-    @IsNotEmpty()
+    // @IsNotEmpty()
+    // @IsInt()
     @IsInt()
+     @Type(() => Number)
     maxSize: number;
 
     @IsNotEmpty()
     @IsInt()
+    @Type(() => Number)
     minSize: number;
 
     @IsNotEmpty()

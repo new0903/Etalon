@@ -37,8 +37,10 @@ export class ProductController {
       }),
     }),
   )
-  async CreateProductController(@Body() data: CreateProductDTO, @UploadedFiles() files) {
-    return this.productService.CreateProduct(data,files);
+  async CreateProductController(@Body() data: CreateProductDTO, @UploadedFiles() files ) {
+    console.log(data.title)
+    console.log(data)
+    return this.productService.CreateProduct(data, files);
   }
 
   @Put('update')
@@ -55,7 +57,7 @@ export class ProductController {
     }),
   )
   async UpdateProductController(@Body() data: UpdateProductDTO, @UploadedFiles() files) {
-    return this.productService.UpdateProduct(data,files);
+    return this.productService.UpdateProduct(data, files);
   }
 
   @Delete('delete/:id')

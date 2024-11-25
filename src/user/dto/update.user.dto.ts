@@ -21,6 +21,15 @@ export class UpdateUserDTO{
     @IsNotEmpty()
     @IsString()
     @MaxLength(50)
-    password: string;
+    oldPassword: string;
+    @IsNotEmpty()
+    @IsString()
+    @MaxLength(50)
+    newPassword: string;
+
+    @IsNotEmpty()
+    @IsString()
+    @MaxLength(50)
+    confirmPassword: string;
 
 }

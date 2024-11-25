@@ -27,8 +27,8 @@ model User {
 
 model RefreshToken {
   id        String   @id @default(uuid())
-  updatedAt DateTime @updatedAt @map("updated-at")
-  createdAt DateTime @default(now()) @map("created-at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  createdAt DateTime @default(now()) @map("created_at")
   token     String   @unique
   expDate   DateTime
 
@@ -58,12 +58,12 @@ model Product {
   title     String
   article     String
   properties      String
-  ImgUrls  String
-  priceDef     Int
-  priceNDS     Int
-  inStock     Int
-  min       Int
-  max       Int
+  ImgUrls  String?
+  priceDef     Int @default(0)
+  priceNDS     Int @default(0)
+  inStock     Int @default(0)
+  min       Int @default(0)
+  max       Int @default(0)
   category      Category     @relation(fields: [categoryId], references: [id], onDelete: Cascade)
   categoryId    String   @map("category_id")
   historyProductsUser  HistoryProductsUser[]

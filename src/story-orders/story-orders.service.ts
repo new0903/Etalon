@@ -9,7 +9,7 @@ export class StoryOrdersService {
 
     async CreateStoryOrder(data: CreateStoryOrderDTO) {
         try {
-            var storyOrder=this.prismaService.historyProductsUser.create({
+            var storyOrder= await this.prismaService.historyProductsUser.create({
                 data: {
                   productId:data.productId,
                   userId:data.userId,
@@ -51,9 +51,9 @@ export class StoryOrdersService {
   async GetOneStoryOrderOfAll( storyOrderId?: string) {
     try {
       if (storyOrderId) {
-        return this.prismaService.historyProductsUser.findFirst({ where: { id: storyOrderId } });
+        return await this.prismaService.historyProductsUser.findFirst({ where: { id: storyOrderId } });
       } 
-      return this.prismaService.historyProductsUser;
+      return await this.prismaService.historyProductsUser;
     } catch (error) {
       return error;
     }

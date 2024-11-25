@@ -1,38 +1,39 @@
 
 import { IsEnum, IsNotEmpty, IsString, MaxLength, MinLength, IsOptional, IsUrl, IsInt,IsArray,ArrayMinSize,IsObject } from "class-validator"
-
+import { Type } from "class-transformer";
 export class CreateProductDTO{
 
-    @IsNotEmpty()
     @IsString()
     @MaxLength(3000)
     title: string;
 
-    @IsNotEmpty()
     @IsString()
     @MaxLength(50)
     article: string;
 
-    @IsNotEmpty()
-    @IsInt()
-    @MaxLength(50)
+    // @IsNotEmpty()
+     @IsInt()
+     @Type(() => Number)
     priceDef: number;
 
-    @IsNotEmpty()
-    @IsInt()
-    @MaxLength(50)
+    // @IsNotEmpty()
+     @IsInt()
+     @Type(() => Number)
     priceNDS: number;
 
-    @IsNotEmpty()
-    @IsInt()
+    // @IsNotEmpty()
+     @IsInt()
+     @Type(() => Number)
     inStock: number;
 
-    @IsNotEmpty()
-    @IsInt()
+    // @IsNotEmpty()
+     @IsInt()
+     @Type(() => Number)
     maxSize: number;
 
-    @IsNotEmpty()
-    @IsInt()
+    // @IsNotEmpty()
+     @IsInt()
+     @Type(() => Number)
     minSize: number;
 
     @IsNotEmpty()

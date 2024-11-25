@@ -2,7 +2,7 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { UpdateUserDTO } from './dto/update.user.dto';
 import { CreateUserDTO } from './dto/create.user.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
-import * as bcrypt from 'bcrypt';
+import { genSalt, hashSync, compare } from 'bcrypt';
 
 @Injectable()
 export class UserService {
@@ -11,14 +11,14 @@ export class UserService {
 
     async CreateUser(data: CreateUserDTO) {
         try {
-          //  this.prismaService.historyProductsUser
-            const saltOrRounds =  await bcrypt.genSalt();
-            const hash = await bcrypt.hash(data.password, saltOrRounds);
+            this.prismaService.historyProductsUser
+            const saltOrRounds =  await genSalt();
+            const hash = await hashSync(data.password, saltOrRounds);
             var user = await this.prismaService.user.create({
                 data: {
                     email: data.email,
                     login: data.login,
-                    password:   hash 
+                    password: hash//data.password// hash 
                 },
             });
             return user;
@@ -31,16 +31,20 @@ export class UserService {
         try {
             
             const user=await this.prismaService.user.findFirst({ where: { id: data.id } });
-            const isMatch = await bcrypt.compare( data.password, user.password);
+            const isMatch = await compare( data.oldPassword, user.password);
             if (isMatch) {
-                const saltOrRounds = 10;
-                const hash = await bcrypt.hash(data.password, saltOrRounds);
+                let hash= user.password;
+                if (data.newPassword===data.confirmPassword) {
+                    
+                    const saltOrRounds =  await genSalt();
+                    hash = await hashSync(data.newPassword, saltOrRounds);
+                }
                 return await this.prismaService.user.update({
                     where: { id: data.id },
                     data: {
                         email: data.email,
                         login: data.login,
-                        password: hash
+                        password: data.newPassword
                     },
                 });
             }

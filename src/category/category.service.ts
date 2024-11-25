@@ -9,9 +9,9 @@ export class CategoryService {
 
   async CreateCategory(data: CreateCategoryDTO) {
     try {
-      var category = this.prismaService.category.create({
+      var category =await this.prismaService.category.create({
         data: {
-          name: data.name,
+          name: data.nameCategory,
         }
       });
 
@@ -24,14 +24,14 @@ export class CategoryService {
   async GetOneCategoryOfAll(categoryId?: string) {
     try {
       if (categoryId) {
-        return this.prismaService.category.findFirst({
+        return await this.prismaService.category.findFirst({
           where: {
             id: categoryId,
           }
         })
       }
 
-      return this.prismaService.category.findMany();
+      return await this.prismaService.category.findMany();
     } catch (e) {
       console.debug("Ошибка поиска категории.", e);
     }
@@ -39,7 +39,7 @@ export class CategoryService {
 
   async DeleteCategory(categoryId: string) {
     try {
-      await this.prismaService.category.delete({
+      await await this.prismaService.category.delete({
         where: {
           id: categoryId,
         }

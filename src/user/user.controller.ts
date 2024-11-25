@@ -14,7 +14,6 @@ import { CreateUserDTO } from './dto/create.user.dto';
 import { UserService } from './user.service';
 
 
-
 @Controller('user')
 export class UserController {
 

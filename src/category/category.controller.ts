@@ -9,6 +9,7 @@ export class CategoryController {
 
   @Post('create')
   async create(@Body() data: CreateCategoryDTO) {
+    console.log(data.nameCategory)
     return this.categoryService.CreateCategory(data);
   }
 
