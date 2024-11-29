@@ -40,8 +40,7 @@ export class ProductController {
     }),
   )
   async CreateProductController(@Body() data: CreateProductDTO, @UploadedFiles() files, @CurrentUser() jwtPayload: JwtPayload  ) {
-    console.log(data.title)
-    console.log(data)
+   
     return this.productService.CreateProduct(data, files,jwtPayload);
   }
 

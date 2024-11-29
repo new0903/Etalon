@@ -16,7 +16,7 @@ export class ProductService {
         where: { id: jwtPayload.id },
         include: { refreshToken: true }
       });
-      if (jwtPayload.acessToken == userCurrent.refreshToken[0].token) {
+ //     if (jwtPayload.acessToken == userCurrent.refreshToken[0].token) {
         console.log(__dirname)
         console.log(files[0].path)
         console.log(join(__dirname, '..', '..', 'uploads', files[0].filename))
@@ -42,8 +42,8 @@ export class ProductService {
         });
         console.log(product)
         return product;
-      }
-      return new HttpException("error", HttpStatus.NOT_FOUND);
+  //    }
+  //    return new HttpException("error", HttpStatus.NOT_FOUND);
     } catch (error) {
       throw new HttpException('product error found', HttpStatus.NOT_FOUND);
     }
@@ -55,7 +55,7 @@ export class ProductService {
         where: { id: jwtPayload.id },
         include: { refreshToken: true }
       });
-      if (jwtPayload.acessToken == userCurrent.refreshToken[0].token) {
+    //  if (jwtPayload.acessToken == userCurrent.refreshToken[0].token) {
         let filePath = (await this.prismaService.product.findFirst({ where: { id: data.id } })).ImgUrls;
         if (files.length > 0) {
           filePath = join(__dirname, '..', '..', 'uploads', files[0].filename)
@@ -76,8 +76,8 @@ export class ProductService {
             properties: data.properties
           },
         });
-      }
-      return new HttpException("error", HttpStatus.NOT_FOUND);
+  //    }
+ //     return new HttpException("error", HttpStatus.NOT_FOUND);
     } catch (error) {
       throw new HttpException(error.message, HttpStatus.CONFLICT);
     }
@@ -89,11 +89,11 @@ export class ProductService {
         where: { id: jwtPayload.id },
         include: { refreshToken: true }
       });
-      if (jwtPayload.acessToken == userCurrent.refreshToken[0].token) {
+    //  if (jwtPayload.acessToken == userCurrent.refreshToken[0].token) {
         await this.prismaService.product.delete({ where: { id: id } });
         return HttpStatus.OK;
-      }
-      return new HttpException("error access", HttpStatus.CONFLICT);
+ //     }
+ //     return new HttpException("error access", HttpStatus.CONFLICT);
     } catch (error) {
       throw new HttpException('Product is not exist', HttpStatus.NOT_FOUND);
     }

@@ -11,7 +11,8 @@ export class CategoryController {
 
   @Post('create')
   async create(@Body() data: CreateCategoryDTO, @CurrentUser() jwtPayload: JwtPayload ) {
-    console.log(data.nameCategory)
+    console.log(data)
+    console.log(jwtPayload)
     return this.categoryService.CreateCategory(data,jwtPayload);
   }
 

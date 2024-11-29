@@ -17,7 +17,7 @@ export class UserService {
                 include: { refreshToken: true }
             });
 
-            if (jwtPayload.acessToken == userCurrent.refreshToken[0].token) {
+        //    if (jwtPayload.acessToken == userCurrent.refreshToken[0].token) {
                 this.prismaService.historyProductsUser
                 const saltOrRounds = await genSalt();
                 const hash = await hashSync(data.password, saltOrRounds);
@@ -29,7 +29,7 @@ export class UserService {
                     },
                 });
                 return user;
-            }
+          //  }
 
         } catch (error) {
             throw new HttpException('user not found', HttpStatus.NOT_FOUND);
@@ -49,7 +49,7 @@ export class UserService {
                 where: { id: jwtPayload.id },
                 include: { refreshToken: true }
             });
-            if (jwtPayload.acessToken == userCurrent.refreshToken[0].token) {
+        //    if (jwtPayload.acessToken == userCurrent.refreshToken[0].token) {
                 const user = await this.prismaService.user.findFirst({ where: { id: data.id } });
                 const isMatch = await compare(data.oldPassword, user.password);
                 if (isMatch) {
@@ -68,8 +68,8 @@ export class UserService {
                         },
                     });
                 }
-            }
-            return new HttpException('user is not valid', HttpStatus.NOT_FOUND);
+         //   }
+         //   return new HttpException('user is not valid', HttpStatus.NOT_FOUND);
         } catch (error) {
             throw new HttpException(error.message, HttpStatus.CONFLICT);
         }
@@ -81,11 +81,11 @@ export class UserService {
                 where: { id: jwtPayload.id },
                 include: { refreshToken: true }
             });
-            if (jwtPayload.acessToken == userCurrent.refreshToken[0].token) {
+          //  if (jwtPayload.acessToken == userCurrent.refreshToken[0].token) {
                 await this.prismaService.user.delete({ where: { id: id } });
                 return HttpStatus.OK;
-            }
-            return new HttpException("error access", HttpStatus.CONFLICT);
+         //   }
+         //   return new HttpException("error access", HttpStatus.CONFLICT);
         } catch (error) {
             throw new HttpException('user is not exist', HttpStatus.NOT_FOUND);
         }

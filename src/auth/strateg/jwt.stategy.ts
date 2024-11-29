@@ -26,11 +26,12 @@ export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
   }
 
   async validate(payload: JwtPayload) {
-    const user = await this.userService
+    const user : User = await this.userService
       .findOne(payload.email)
       .catch((err) => {
         return null;
       });
+      console.log("users validate")
       console.log(user);
 
     if (!user || user.acessTokenLastSerial != payload.issueNumber) {
@@ -38,10 +39,6 @@ export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
       throw new UnauthorizedException();
     }
 
-    if (!user || user.refreshToken[0].token != payload.acessToken) {
-      console.log("1234");
-      throw new UnauthorizedException();
-    }
     // if (user.isBanned) {
     //   throw new HttpException(
     //     'your account has been blocked',
