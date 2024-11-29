@@ -5,12 +5,21 @@ import { ProductModule } from './product/product.module';
 import { UserModule } from './user/user.module';
 import { CategoryModule } from './category/category.module';
 
-import { ServeStaticModule } from '@nestjs/serve-static';
-import { join } from 'path';
+import { AuthModule } from './auth/auth.module';
+
+import { PrismaModule } from './prisma/prisma.module';
+import { APP_GUARD } from '@nestjs/core';
+import { AuthGuard } from '@nestjs/passport';
+import { JwtAuthGuard } from './auth/guards/jwt-auth.guard';
 
 @Module({
-  imports: [ProductModule, UserModule,CategoryModule],
+  imports: [ProductModule, UserModule,CategoryModule, AuthModule,PrismaModule],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    AppService,
+    {
+      provide: APP_GUARD,
+      useClass: JwtAuthGuard,
+    },],
 })
 export class AppModule {}

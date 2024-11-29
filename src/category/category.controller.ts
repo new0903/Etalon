@@ -3,14 +3,16 @@ import { CategoryService } from './category.service';
 import { CreateCategoryDTO } from './dto/create.category.tdo';
 import { UpdateCategoryDTO } from './dto/update.category.tdo';
 
+import { CurrentUser } from 'src/customDecorators/current-user.decorator';
+import { JwtPayload } from 'src/interfaces/jwt-payload.interface';
 @Controller('category')
 export class CategoryController {
   constructor(private readonly categoryService: CategoryService) {}
 
   @Post('create')
-  async create(@Body() data: CreateCategoryDTO) {
+  async create(@Body() data: CreateCategoryDTO, @CurrentUser() jwtPayload: JwtPayload ) {
     console.log(data.nameCategory)
-    return this.categoryService.CreateCategory(data);
+    return this.categoryService.CreateCategory(data,jwtPayload);
   }
 
   @Get(':categoryId')
@@ -19,12 +21,12 @@ export class CategoryController {
   }
 
   @Delete('delete/:categoryId')
-  async delete(@Param('categoryId') categoryId: string) {
-    return this.categoryService.DeleteCategory(categoryId);
+  async delete(@Param('categoryId') categoryId: string, @CurrentUser() jwtPayload: JwtPayload ) {
+    return this.categoryService.DeleteCategory(categoryId,jwtPayload);
   }
 
   @Put('update')
-  async update(@Body() data: UpdateCategoryDTO) {
-    return this.categoryService.UpdateCategory(data);
+  async update(@Body() data: UpdateCategoryDTO, @CurrentUser() jwtPayload: JwtPayload ) {
+    return this.categoryService.UpdateCategory(data,jwtPayload);
   }  
 }

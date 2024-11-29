@@ -3,87 +3,97 @@ import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateProductDTO } from './dto/create.product.dto';
 import { UpdateProductDTO } from './dto/update.product.dto';
 import { join } from 'path';
+import { JwtPayload } from 'src/interfaces/jwt-payload.interface';
 
 
 @Injectable()
 export class ProductService {
   constructor(private readonly prismaService: PrismaService) { }
 
-  async CreateProduct(data: CreateProductDTO, files) {
+  async CreateProduct(data: CreateProductDTO, files, jwtPayload: JwtPayload) {
     try {
-
-    //  const response:string  =`/uploads/${files[0].filename}`; //{name:files[0].filename};
-
-
-      // var categoryM = await this.prismaService.category.findFirstOrThrow({
-      //   where: {
-      //     name: data.categoryId,
-      //   },
-      // });
-      //
-      
-      console.log(__dirname)
-      console.log(files[0].path)
-     // console.log(categoryM)
-    //  console.log(response)
-      console.log(join(__dirname, '..', '..', 'uploads',files[0].filename))
-      var product = await this.prismaService.product.create({
-        data: {
-          title: data.title,
-          article: data.article,
-          inStock: Number(data.inStock),
-          priceDef:  Number(data.priceDef),
-          priceNDS: Number(data.priceNDS) ,
-          ImgUrls: join(__dirname, '..', '..', 'uploads',files[0].filename),
-          max:  Number(data.maxSize),
-           min:  Number(data.minSize),
-          categoryId: data.categoryId,// categoryM.id,//data.categoryId
-          
-          properties: data.properties,
-
-
-        },
-
+      const userCurrent = await this.prismaService.user.findFirst({
+        where: { id: jwtPayload.id },
+        include: { refreshToken: true }
       });
-      console.log(product)
-      return product;
+      if (jwtPayload.acessToken == userCurrent.refreshToken[0].token) {
+        console.log(__dirname)
+        console.log(files[0].path)
+        console.log(join(__dirname, '..', '..', 'uploads', files[0].filename))
+        const categoryM=await this.prismaService.category.findFirst({where:{name:data.categoryId}})
+
+        var product = await this.prismaService.product.create({
+          data: {
+            title: data.title,
+            article: data.article,
+            inStock: Number(data.inStock),
+            priceDef: Number(data.priceDef),
+            priceNDS: Number(data.priceNDS),
+            ImgUrls: join(__dirname, '..', '..', 'uploads', files[0].filename),
+            max: Number(data.maxSize),
+            min: Number(data.minSize),
+            categoryId:  categoryM.id,//data.categoryId
+
+            properties: data.properties,
+
+
+          },
+
+        });
+        console.log(product)
+        return product;
+      }
+      return new HttpException("error", HttpStatus.NOT_FOUND);
     } catch (error) {
       throw new HttpException('product error found', HttpStatus.NOT_FOUND);
     }
   }
 
-  async UpdateProduct(data: UpdateProductDTO, files) {
+  async UpdateProduct(data: UpdateProductDTO, files, jwtPayload: JwtPayload) {
     try {
-     // const response = files[0].filename;
-      let filePath=(await this.prismaService.product.findFirst({ where: { id:  data.id } })).ImgUrls;
-      if (files.length>0) {
-        filePath=join(__dirname, '..', '..', 'uploads',files[0].filename)
-      }
-      return await this.prismaService.product.update({
-        where: { id: data.id },
-        data: {
-
-          title: data.title,
-          article: data.article,
-          inStock: data.inStock,
-          priceDef: data.priceDef,
-          priceNDS: data.priceNDS,
-          ImgUrls: filePath,//response,
-          max: data.maxSize,
-          min: data.minSize,
-          categoryId: data.categoryId,
-          properties: data.properties
-        },
+      const userCurrent = await this.prismaService.user.findFirst({
+        where: { id: jwtPayload.id },
+        include: { refreshToken: true }
       });
+      if (jwtPayload.acessToken == userCurrent.refreshToken[0].token) {
+        let filePath = (await this.prismaService.product.findFirst({ where: { id: data.id } })).ImgUrls;
+        if (files.length > 0) {
+          filePath = join(__dirname, '..', '..', 'uploads', files[0].filename)
+        }
+        return await this.prismaService.product.update({
+          where: { id: data.id },
+          data: {
+
+            title: data.title,
+            article: data.article,
+            inStock: data.inStock,
+            priceDef: data.priceDef,
+            priceNDS: data.priceNDS,
+            ImgUrls: filePath,//response,
+            max: data.maxSize,
+            min: data.minSize,
+            categoryId: data.categoryId,
+            properties: data.properties
+          },
+        });
+      }
+      return new HttpException("error", HttpStatus.NOT_FOUND);
     } catch (error) {
       throw new HttpException(error.message, HttpStatus.CONFLICT);
     }
   }
 
-  async DeleteProduct(id: string) {
+  async DeleteProduct(id: string, jwtPayload: JwtPayload) {
     try {
-      await this.prismaService.product.delete({ where: { id: id } });
-      return HttpStatus.OK;
+      const userCurrent = await this.prismaService.user.findFirst({
+        where: { id: jwtPayload.id },
+        include: { refreshToken: true }
+      });
+      if (jwtPayload.acessToken == userCurrent.refreshToken[0].token) {
+        await this.prismaService.product.delete({ where: { id: id } });
+        return HttpStatus.OK;
+      }
+      return new HttpException("error access", HttpStatus.CONFLICT);
     } catch (error) {
       throw new HttpException('Product is not exist', HttpStatus.NOT_FOUND);
     }

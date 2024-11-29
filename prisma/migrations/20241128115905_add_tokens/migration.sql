@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE `refreshtoken` MODIFY `expDate` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3);

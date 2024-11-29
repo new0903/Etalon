@@ -32,4 +32,5 @@ export class UpdateUserDTO{
     @MaxLength(50)
     confirmPassword: string;
 
+
 }
