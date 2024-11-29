@@ -107,7 +107,7 @@ export class AuthService {
         console.log(user)
         console.log(payload)
         console.log(jwtSign)
-        return 'Bearer ' +jwtSign;// user.refreshToken[0].token;//'Bearer ' +jwtSign
+        return 'Bearer ' + user.refreshToken[0].token;//'Bearer ' +jwtSign
       }
     
       async setRefreshToken(userId: string) {
