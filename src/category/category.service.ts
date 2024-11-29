@@ -10,10 +10,10 @@ export class CategoryService {
 
   async CreateCategory(data: CreateCategoryDTO, jwtPayload: JwtPayload) {
     try {
-      const userCurrent = await this.prismaService.user.findFirst({
-        where: { id: jwtPayload.id },
-        include: { refreshToken: true }
-      });
+      // const userCurrent = await this.prismaService.user.findFirst({
+      //   where: { id: jwtPayload.id },
+      //   include: { refreshToken: true }
+      // });
     //  if (jwtPayload.acessToken == userCurrent.refreshToken[0].token) {
         var category = await this.prismaService.category.create({
           data: {
@@ -26,7 +26,6 @@ export class CategoryService {
     //  return new HttpException("error", HttpStatus.NOT_FOUND);
     } catch (e) {
       return new HttpException("Ошибка при создании новой категории.", HttpStatus.NOT_FOUND);
-      console.debug("Ошибка при создании новой категории.", e);
     }
   }
 
@@ -49,10 +48,10 @@ export class CategoryService {
 
   async DeleteCategory(categoryId: string, jwtPayload: JwtPayload) {
     try {
-      const userCurrent = await this.prismaService.user.findFirst({
-        where: { id: jwtPayload.id },
-        include: { refreshToken: true }
-      });
+      // const userCurrent = await this.prismaService.user.findFirst({
+      //   where: { id: jwtPayload.id },
+      //   include: { refreshToken: true }
+      // });
    //   if (jwtPayload.acessToken == userCurrent.refreshToken[0].token) {
         await this.prismaService.category.delete({
           where: {

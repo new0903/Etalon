@@ -12,10 +12,10 @@ export class ProductService {
 
   async CreateProduct(data: CreateProductDTO, files, jwtPayload: JwtPayload) {
     try {
-      const userCurrent = await this.prismaService.user.findFirst({
-        where: { id: jwtPayload.id },
-        include: { refreshToken: true }
-      });
+      // const userCurrent = await this.prismaService.user.findFirst({
+      //   where: { id: jwtPayload.id },
+      //   include: { refreshToken: true }
+      // });
  //     if (jwtPayload.acessToken == userCurrent.refreshToken[0].token) {
         console.log(__dirname)
         console.log(files[0].path)
@@ -51,10 +51,10 @@ export class ProductService {
 
   async UpdateProduct(data: UpdateProductDTO, files, jwtPayload: JwtPayload) {
     try {
-      const userCurrent = await this.prismaService.user.findFirst({
-        where: { id: jwtPayload.id },
-        include: { refreshToken: true }
-      });
+      // const userCurrent = await this.prismaService.user.findFirst({
+      //   where: { id: jwtPayload.id },
+      //   include: { refreshToken: true }
+      // });
     //  if (jwtPayload.acessToken == userCurrent.refreshToken[0].token) {
         let filePath = (await this.prismaService.product.findFirst({ where: { id: data.id } })).ImgUrls;
         if (files.length > 0) {
@@ -85,10 +85,10 @@ export class ProductService {
 
   async DeleteProduct(id: string, jwtPayload: JwtPayload) {
     try {
-      const userCurrent = await this.prismaService.user.findFirst({
-        where: { id: jwtPayload.id },
-        include: { refreshToken: true }
-      });
+      // const userCurrent = await this.prismaService.user.findFirst({
+      //   where: { id: jwtPayload.id },
+      //   include: { refreshToken: true }
+      // });
     //  if (jwtPayload.acessToken == userCurrent.refreshToken[0].token) {
         await this.prismaService.product.delete({ where: { id: id } });
         return HttpStatus.OK;

@@ -12,10 +12,10 @@ export class UserService {
 
     async CreateUser(data: CreateUserDTO, jwtPayload: JwtPayload) {
         try {
-            const userCurrent = await this.prismaService.user.findFirst({
-                where: { id: jwtPayload.id },
-                include: { refreshToken: true }
-            });
+            // const userCurrent = await this.prismaService.user.findFirst({
+            //     where: { id: jwtPayload.id },
+            //     include: { refreshToken: true }
+            // });
 
         //    if (jwtPayload.acessToken == userCurrent.refreshToken[0].token) {
                 this.prismaService.historyProductsUser
@@ -45,10 +45,10 @@ export class UserService {
 
     async UpdateUser(data: UpdateUserDTO, jwtPayload: JwtPayload) {
         try {
-            const userCurrent = await this.prismaService.user.findFirst({
-                where: { id: jwtPayload.id },
-                include: { refreshToken: true }
-            });
+            // const userCurrent = await this.prismaService.user.findFirst({
+            //     where: { id: jwtPayload.id },
+            //     include: { refreshToken: true }
+            // });
         //    if (jwtPayload.acessToken == userCurrent.refreshToken[0].token) {
                 const user = await this.prismaService.user.findFirst({ where: { id: data.id } });
                 const isMatch = await compare(data.oldPassword, user.password);
@@ -77,10 +77,10 @@ export class UserService {
 
     async DeleteUser(id: string, jwtPayload: JwtPayload) {
         try {
-            const userCurrent = await this.prismaService.user.findFirst({
-                where: { id: jwtPayload.id },
-                include: { refreshToken: true }
-            });
+            // const userCurrent = await this.prismaService.user.findFirst({
+            //     where: { id: jwtPayload.id },
+            //     include: { refreshToken: true }
+            // });
           //  if (jwtPayload.acessToken == userCurrent.refreshToken[0].token) {
                 await this.prismaService.user.delete({ where: { id: id } });
                 return HttpStatus.OK;
