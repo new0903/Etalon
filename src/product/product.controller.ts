@@ -17,7 +17,7 @@ import { diskStorage } from 'multer';
 import { extname } from 'path';
 import { UpdateProductDTO } from './dto/update.product.dto';
 import { CreateProductDTO } from './dto/create.product.dto';
-
+import { Public } from 'src/customDecorators/public.decorator';
 import { CurrentUser } from 'src/customDecorators/current-user.decorator';
 import { JwtPayload } from 'src/interfaces/jwt-payload.interface';
 
@@ -67,6 +67,7 @@ export class ProductController {
     return this.productService.DeleteProduct(id,jwtPayload);
   }
 
+  @Public()
   @Get(':productId')
   async GetProductController(
     @Query('productid') productId?: string,

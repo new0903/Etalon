@@ -2,6 +2,7 @@ import { Body, Controller, Delete, Get, Param, Post, Put, Query } from '@nestjs/
 import { CategoryService } from './category.service';
 import { CreateCategoryDTO } from './dto/create.category.tdo';
 import { UpdateCategoryDTO } from './dto/update.category.tdo';
+import { Public } from 'src/customDecorators/public.decorator';
 
 import { CurrentUser } from 'src/customDecorators/current-user.decorator';
 import { JwtPayload } from 'src/interfaces/jwt-payload.interface';
@@ -16,6 +17,7 @@ export class CategoryController {
     return this.categoryService.CreateCategory(data,jwtPayload);
   }
 
+  @Public()
   @Get(':categoryId')
   async get(@Query('categoryId') categoryId?: string) {
     return this.categoryService.GetOneCategoryOfAll(categoryId);
