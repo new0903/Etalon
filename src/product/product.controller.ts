@@ -39,9 +39,11 @@ export class ProductController {
       }),
     }),
   )
-  async CreateProductController(@Body() data: CreateProductDTO, @UploadedFiles() files, @CurrentUser() jwtPayload: JwtPayload  ) {
-   
-    return this.productService.CreateProduct(data, files,jwtPayload);
+  async CreateProductController(@Body() data: CreateProductDTO, @UploadedFiles() files, @CurrentUser() jwtPayload: JwtPayload) {
+    console.log(data)
+    console.log(jwtPayload)
+    console.log(files)
+    return this.productService.CreateProduct(data, files, jwtPayload);
   }
 
   @Put('update')
@@ -57,14 +59,14 @@ export class ProductController {
       }),
     }),
   )
-  async UpdateProductController(@Body() data: UpdateProductDTO, @UploadedFiles() files, @CurrentUser() jwtPayload: JwtPayload ) {
-    return this.productService.UpdateProduct(data, files,jwtPayload);
+  async UpdateProductController(@Body() data: UpdateProductDTO, @UploadedFiles() files, @CurrentUser() jwtPayload: JwtPayload) {
+    return this.productService.UpdateProduct(data, files, jwtPayload);
   }
 
   @Delete('delete/:id')
-  async DeleteProductController(@Param('id') id: string, @CurrentUser() jwtPayload: JwtPayload ) {
+  async DeleteProductController(@Param('id') id: string, @CurrentUser() jwtPayload: JwtPayload) {
 
-    return this.productService.DeleteProduct(id,jwtPayload);
+    return this.productService.DeleteProduct(id, jwtPayload);
   }
 
   @Public()

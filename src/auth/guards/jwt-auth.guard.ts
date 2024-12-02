@@ -39,7 +39,7 @@ export class JwtAuthGuard extends AuthGuard('jwt') {// implements CanActivate
     }
     if (token) {
       const user  = await this.prismaService.user.findFirst({
-        where:{email:request.headers["email"]},
+        where:{email:request.headers["Email"]},
         include:{refreshToken:true}
       })
       try {

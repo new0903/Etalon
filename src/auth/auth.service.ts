@@ -103,10 +103,10 @@ export class AuthService {
           token:user.refreshToken[0].token,
           issueNumber: user.acessTokenLastSerial,
         };
-        const jwtSign=this.jwtService.sign(payload)
-        console.log(user)
-        console.log(payload)
-        console.log(jwtSign)
+   //    const jwtSign=this.jwtService.sign(payload)
+      //  console.log(user)
+       // console.log(payload)
+        //console.log(jwtSign)
         return 'Bearer ' + user.refreshToken[0].token;//'Bearer ' +jwtSign
       }
     
