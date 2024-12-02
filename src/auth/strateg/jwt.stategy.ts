@@ -27,17 +27,17 @@ export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
 
   async validate(payload: JwtPayload) {
     const user : User = await this.userService
-      .findOne(payload.email)
+      .findOne(payload.Email)
       .catch((err) => {
         return null;
       });
-      console.log("users validate")
-      console.log(user);
+     // console.log("users validate")
+    //  console.log(user);
 
-    if (!user || user.acessTokenLastSerial != payload.issueNumber) {
-      console.log("123");
-      throw new UnauthorizedException();
-    }
+    // if (!user || user.acessTokenLastSerial != payload.issueNumber) {
+    //   console.log("123");
+    //   throw new UnauthorizedException();
+    // }
 
     // if (user.isBanned) {
     //   throw new HttpException(
@@ -45,7 +45,7 @@ export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
     //     HttpStatus.FORBIDDEN,
     //   );
     // }
-    console.log(payload);
+   // console.log(payload);
 
     return payload;
   }

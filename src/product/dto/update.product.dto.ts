@@ -20,32 +20,37 @@ export class UpdateProductDTO{
     article: string;
 
     // @IsNotEmpty()
-    @IsInt()
-     @Type(() => Number)
-    priceDef: number;
+    // @IsInt()
+    //  @Type(() => Number)
+    @IsString()
+    priceDef: string;
 
     // @IsNotEmpty()
     // @IsString()
-    @IsInt()
-     @Type(() => Number)
-    priceNDS: number;
+    // @IsInt()
+    //  @Type(() => Number)
+    @IsString()
+    priceNDS: string;
 
     // @IsNotEmpty()
     // @IsInt()
-    @IsInt()
-     @Type(() => Number)
-    inStock: number;
+   // @IsInt()
+    // @Type(() => Number)
+    @IsString()
+    inStock: string;
 
     // @IsNotEmpty()
     // @IsInt()
-    @IsInt()
-     @Type(() => Number)
-    maxSize: number;
+    // @IsInt()
+    //  @Type(() => Number)
+     @IsString()
+    maxSize: string;
 
-    @IsNotEmpty()
-    @IsInt()
-    @Type(() => Number)
-    minSize: number;
+    // @IsNotEmpty()
+    // @IsInt()
+    // @Type(() => Number)
+     @IsString()
+    minSize: string;
 
     @IsNotEmpty()
     @IsString()

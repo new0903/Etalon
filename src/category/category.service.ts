@@ -10,11 +10,7 @@ export class CategoryService {
 
   async CreateCategory(data: CreateCategoryDTO, jwtPayload: JwtPayload) {
     try {
-      // const userCurrent = await this.prismaService.user.findFirst({
-      //   where: { id: jwtPayload.id },
-      //   include: { refreshToken: true }
-      // });
-    //  if (jwtPayload.acessToken == userCurrent.refreshToken[0].token) {
+ 
         var category = await this.prismaService.category.create({
           data: {
             name: data.nameCategory,
@@ -22,10 +18,25 @@ export class CategoryService {
         });
 
         return category;
-    //  }
-    //  return new HttpException("error", HttpStatus.NOT_FOUND);
     } catch (e) {
       return new HttpException("Ошибка при создании новой категории.", HttpStatus.NOT_FOUND);
+    }
+  }
+
+  async UpdateCategory(data: UpdateCategoryDTO, jwtPayload: JwtPayload) {
+    try {
+        console.log(data)
+         var category = await this.prismaService.category.update({
+          where: {
+            id: data.id,
+          },
+          data: {
+            name: data.nameCategory,
+          }
+        })
+        return category;
+    } catch (e) {
+      return new HttpException("error", HttpStatus.NOT_FOUND);
     }
   }
 
@@ -42,17 +53,12 @@ export class CategoryService {
       return await this.prismaService.category.findMany();
     } catch (e) {
       return new HttpException("Ошибка поиска категории.", HttpStatus.NOT_FOUND);
-      console.debug("Ошибка поиска категории.", e);
     }
   }
 
   async DeleteCategory(categoryId: string, jwtPayload: JwtPayload) {
     try {
-      // const userCurrent = await this.prismaService.user.findFirst({
-      //   where: { id: jwtPayload.id },
-      //   include: { refreshToken: true }
-      // });
-   //   if (jwtPayload.acessToken == userCurrent.refreshToken[0].token) {
+
         await this.prismaService.category.delete({
           where: {
             id: categoryId,
@@ -60,31 +66,6 @@ export class CategoryService {
         });
 
         return HttpStatus.OK;
-    //  }
-  //    return new HttpException("error", HttpStatus.NOT_FOUND);
-    } catch (e) {
-      return new HttpException("error", HttpStatus.NOT_FOUND);
-    }
-  }
-
-  async UpdateCategory(data: UpdateCategoryDTO, jwtPayload: JwtPayload) {
-    try {
-
-      const userCurrent = await this.prismaService.user.findFirst({
-        where: { id: jwtPayload.id },
-        include: { refreshToken: true }
-      });
-  //    if (jwtPayload.acessToken == userCurrent.refreshToken[0].token) {
-        return await this.prismaService.category.update({
-          where: {
-            id: data.id,
-          },
-          data: {
-            name: data.name,
-          }
-        })
-  //    }
-    //  return new HttpException("error", HttpStatus.NOT_FOUND);
     } catch (e) {
       return new HttpException("error", HttpStatus.NOT_FOUND);
     }
