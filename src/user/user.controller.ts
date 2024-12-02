@@ -36,11 +36,11 @@ export class UserController {
         return this.userService.DeleteUser(id,jwtPayload);
     }
     
-    @Get(':loginUser')
+    @Get('users')
     async GetUserController(
-        @Query('loginUser') loginUser ?: string,
+        @Query('login') login ?: string,
     ) {
-        return this.userService.GetOneUserOrAll(loginUser);
+        return this.userService.GetOneUserOrAll(login);
     }
     
     

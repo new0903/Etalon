@@ -70,11 +70,11 @@ export class ProductController {
   }
 
   @Public()
-  @Get(':productId')
+  @Get('products')
   async GetProductController(
-    @Query('productid') productId?: string,
+    @Query('Id') Id?: string,
   ) {
-    return this.productService.GetOneProductOrAll(productId);
+    return this.productService.GetOneProductOrAll(Id);
   }
 
 

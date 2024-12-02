@@ -51,33 +51,37 @@ export class ProductService {
 
   async UpdateProduct(data: UpdateProductDTO, files, jwtPayload: JwtPayload) {
     try {
-      // const userCurrent = await this.prismaService.user.findFirst({
-      //   where: { id: jwtPayload.id },
-      //   include: { refreshToken: true }
-      // });
-    //  if (jwtPayload.acessToken == userCurrent.refreshToken[0].token) {
-        let filePath = (await this.prismaService.product.findFirst({ where: { id: data.id } })).ImgUrls;
+        console.log(data)
+        console.log(data.id)
+        let productOld=await this.prismaService.product.findFirst({ where: { id: data.id } })
+        console.log(productOld)
+        let filePath = productOld.ImgUrls;
+        console.log(filePath)
         if (files.length > 0) {
           filePath = join(__dirname, '..', '..', 'uploads', files[0].filename)
         }
+        const categoryM=await this.prismaService.category.findFirst({where:{id:data.categoryId}})
+        console.log(categoryM)
+
+     //   const stock=data.inStock;
+       // console.log(stock);
+       // console.log(data.inStock);
         return await this.prismaService.product.update({
           where: { id: data.id },
           data: {
 
             title: data.title,
             article: data.article,
-            inStock: data.inStock,
-            priceDef: data.priceDef,
-            priceNDS: data.priceNDS,
+            inStock: parseInt(data.inStock),
+            priceDef: parseInt(data.priceDef),
+            priceNDS: parseInt(data.priceNDS),
             ImgUrls: filePath,//response,
-            max: data.maxSize,
-            min: data.minSize,
-            categoryId: data.categoryId,
+            max: parseInt(data.maxSize),
+            min: parseInt(data.minSize),
+            categoryId: categoryM.id, //data.categoryId,
             properties: data.properties
           },
         });
-  //    }
- //     return new HttpException("error", HttpStatus.NOT_FOUND);
     } catch (error) {
       throw new HttpException(error.message, HttpStatus.CONFLICT);
     }
@@ -101,7 +105,9 @@ export class ProductService {
 
   async GetOneProductOrAll(productId?: string) {
     try {
+      //console.log(productId)
       if (productId) {
+      //  console.log(productId)
         return this.prismaService.product.findFirst({ where: { id: productId } });
       }
       return this.prismaService.product.findMany();

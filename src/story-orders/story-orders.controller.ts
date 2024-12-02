@@ -26,8 +26,8 @@ export class StoryOrdersController {
         return this.storyOrderService.DeleteStoryOrder(id)
     }
 
-    @Get(':storyOrderId')
-    async GetStoryOrdersController(@Query('storyOrderId') storyOrderId: string) {
-        return this.storyOrderService.GetOneStoryOrderOfAll(storyOrderId)
+    @Get('story')
+    async GetStoryOrdersController(@Query('Id') Id?: string) {
+        return this.storyOrderService.GetOneStoryOrderOfAll(Id)
     }
 }
