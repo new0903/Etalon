@@ -44,8 +44,6 @@ export class JwtAuthGuard extends AuthGuard('jwt') {// implements CanActivate
       })
       try {
         if (token==user.refreshToken[0].token) {
-          
-       
           return true;
         }
         throw new UnauthorizedException();

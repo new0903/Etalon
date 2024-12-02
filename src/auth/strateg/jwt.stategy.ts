@@ -34,10 +34,10 @@ export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
       console.log("users validate")
       console.log(user);
 
-    if (!user || user.acessTokenLastSerial != payload.issueNumber) {
-      console.log("123");
-      throw new UnauthorizedException();
-    }
+    // if (!user || user.acessTokenLastSerial != payload.issueNumber) {
+    //   console.log("123");
+    //   throw new UnauthorizedException();
+    // }
 
     // if (user.isBanned) {
     //   throw new HttpException(

@@ -70,10 +70,10 @@ export class CategoryService {
   async UpdateCategory(data: UpdateCategoryDTO, jwtPayload: JwtPayload) {
     try {
 
-      const userCurrent = await this.prismaService.user.findFirst({
-        where: { id: jwtPayload.id },
-        include: { refreshToken: true }
-      });
+      // const userCurrent = await this.prismaService.user.findFirst({
+      //   where: { id: jwtPayload.id },
+      //   include: { refreshToken: true }
+      // });
   //    if (jwtPayload.acessToken == userCurrent.refreshToken[0].token) {
         return await this.prismaService.category.update({
           where: {
