@@ -4,6 +4,10 @@ export const CurrentUser = createParamDecorator(
   (data: unknown, ctx: ExecutionContext) => {
     const request = ctx.switchToHttp().getRequest();
   //  console.log(request)
-    return request["user"]; // Здесь предполагается, что данные пользователя хранятся в req.user
+  let payload={
+    Email:request.headers["email"],
+    Login:request.headers["login"]
+  }
+    return payload; // Здесь предполагается, что данные пользователя хранятся в req.user
   },
 );

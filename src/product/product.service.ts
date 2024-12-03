@@ -20,6 +20,10 @@ export class ProductService {
         console.log(__dirname)
         console.log(files[0].path)
         console.log(join(__dirname, '..', '..', 'uploads', files[0].filename))
+        var url="none";
+        if (files!=null) {
+            url= join(__dirname, '..', '..', 'uploads', files[0].filename)
+        }
         const categoryM=await this.prismaService.category.findFirst({where:{name:data.categoryId}})
 
         var product = await this.prismaService.product.create({
@@ -29,7 +33,7 @@ export class ProductService {
             inStock: Number(data.inStock),
             priceDef: Number(data.priceDef),
             priceNDS: Number(data.priceNDS),
-            ImgUrls: join(__dirname, '..', '..', 'uploads', files[0].filename),
+            ImgUrls: url,
             max: Number(data.maxSize),
             min: Number(data.minSize),
             categoryId:  categoryM.id,//data.categoryId
