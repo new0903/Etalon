@@ -2,8 +2,7 @@ import { Body, Controller, Delete, Get, Param, Post, Put, Query } from '@nestjs/
 import { StoryOrdersService } from './story-orders.service';
 import { CreateStoryOrderDTO } from './dto/create.story-order.tdo';
 import { UpdateStoryOrderDTO } from './dto/update.story-order.tdo';
-
-
+import { Public } from 'src/customDecorators/public.decorator';
 import { CurrentUser } from 'src/customDecorators/current-user.decorator';
 import { JwtPayload } from 'src/interfaces/jwt-payload.interface';
 
@@ -11,6 +10,7 @@ import { JwtPayload } from 'src/interfaces/jwt-payload.interface';
 export class StoryOrdersController {
     constructor(private readonly storyOrderService: StoryOrdersService){}
 
+    @Public()
     @Post('create')
     async CreateStoryOrdersController(@Body() data: CreateStoryOrderDTO, @CurrentUser() jwtPayload: JwtPayload ) {
         return this.storyOrderService.CreateStoryOrder(data)
