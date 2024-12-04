@@ -21,12 +21,12 @@ export class StoryOrdersController {
         return this.storyOrderService.UpdateStoryOrder(data)
     }
 
-    @Delete('delete:/id')
+    @Delete('delete/:id')
     async DeleteStoryOrdersController(@Param('id') id: string, @CurrentUser() jwtPayload: JwtPayload) {
         return this.storyOrderService.DeleteStoryOrder(id)
     }
 
-    @Get('story')
+    @Get('all')
     async GetStoryOrdersController(@Query('Id') Id?: string) {
         return this.storyOrderService.GetOneStoryOrderOfAll(Id)
     }
