@@ -7,7 +7,7 @@ import { UpdateStoryOrderDTO } from './dto/update.story-order.tdo';
 import { CurrentUser } from 'src/customDecorators/current-user.decorator';
 import { JwtPayload } from 'src/interfaces/jwt-payload.interface';
 
-@Controller('story-orders')
+@Controller('story')
 export class StoryOrdersController {
     constructor(private readonly storyOrderService: StoryOrdersService){}
 
