@@ -42,14 +42,6 @@ model Category {
   products      Product[]
 }
 
-model storyOrders {
-  id        String   @id @default(uuid())
-  title     String
-  article   String
-  priceDef  Int
-  ImgUrls   String
-}
-
 model Product {
   id        String   @id @default(uuid())
   createdAt DateTime @default(now()) @map("created_at")

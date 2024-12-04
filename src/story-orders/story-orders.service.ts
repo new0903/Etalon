@@ -51,9 +51,9 @@ export class StoryOrdersService {
   async GetOneStoryOrderOfAll( storyOrderId?: string) {
     try {
       if (storyOrderId) {
-        return await this.prismaService.historyProductsUser.findFirst({ where: { id: storyOrderId } });
+        return await this.prismaService.historyProductsUser.findFirst({ where: { id: storyOrderId },include:{product:true,user:true} });
       } 
-      return await this.prismaService.historyProductsUser;
+      return await this.prismaService.historyProductsUser.findMany({include:{product:true,user:true}});
     } catch (error) {
       return error;
     }
