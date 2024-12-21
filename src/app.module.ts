@@ -11,9 +11,10 @@ import { PrismaModule } from './prisma/prisma.module';
 import { APP_GUARD } from '@nestjs/core';
 import { AuthGuard } from '@nestjs/passport';
 import { JwtAuthGuard } from './auth/guards/jwt-auth.guard';
+import { StoryOrdersModule } from './story-orders/story-orders.module';
 
 @Module({
-  imports: [ProductModule, UserModule,CategoryModule, AuthModule,PrismaModule],
+  imports: [ProductModule,StoryOrdersModule, UserModule,CategoryModule, AuthModule,PrismaModule],
   controllers: [AppController],
   providers: [
     AppService,

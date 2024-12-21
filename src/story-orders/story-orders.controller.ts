@@ -10,15 +10,15 @@ import { JwtPayload } from 'src/interfaces/jwt-payload.interface';
 export class StoryOrdersController {
     constructor(private readonly storyOrderService: StoryOrdersService){}
 
-    @Public()
+    
     @Post('create')
     async CreateStoryOrdersController(@Body() data: CreateStoryOrderDTO, @CurrentUser() jwtPayload: JwtPayload ) {
-        return this.storyOrderService.CreateStoryOrder(data)
+        return this.storyOrderService.CreateStoryOrder(data,jwtPayload)
     }
     
     @Put('update')
     async UpdateStoryOrdersController(@Body() data: UpdateStoryOrderDTO, @CurrentUser() jwtPayload: JwtPayload) {
-        return this.storyOrderService.UpdateStoryOrder(data)
+        return this.storyOrderService.UpdateStoryOrder(data,jwtPayload)
     }
 
     @Delete('delete/:id')

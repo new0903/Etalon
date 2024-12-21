@@ -1,11 +1,12 @@
-import { IsNotEmpty, IsString, MaxLength, IsInt, IsOptional, IsUrl } from "class-validator";
+import { IsNotEmpty, IsString, MaxLength, IsInt, IsOptional, IsUrl,isArray } from "class-validator";
+import { ProductsStoryOrderDTO } from "./product.storyOrder.dto";
+import { Type } from "class-transformer";
 
 export class CreateStoryOrderDTO {
     @IsNotEmpty()
-    @IsString()
-    productId: string;
+    Record: ProductsStoryOrderDTO[];
 
-    @IsNotEmpty()
-    @IsString()
-    userId: string;
+    @IsInt()
+    @Type(() => Number)
+    TotalCost:number;
 }

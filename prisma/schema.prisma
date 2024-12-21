@@ -18,11 +18,13 @@ model User {
   email String   @unique
   login String   @unique
   password String   @unique
+  phone   String? 
   acessTokenLastSerial Int   @default(0)
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
   historyProductsUser  HistoryProductsUser[]
   refreshToken         RefreshToken[]
+  Orders         Order[]
 }
 
 model RefreshToken {
@@ -59,6 +61,7 @@ model Product {
   category      Category     @relation(fields: [categoryId], references: [id], onDelete: Cascade)
   categoryId    String   @map("category_id")
   historyProductsUser  HistoryProductsUser[]
+  ProductsUserOrder  ProductOrder[]
 }
 
 
@@ -70,4 +73,24 @@ model HistoryProductsUser  {
   productId    String   @map("product_id")
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId    String   @map("user_id")
+}
+model Order  {
+  id        String   @id @default(uuid())
+  
+  TotalCost       Int @default(0)
+  ProductsOrder  ProductOrder[]
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String   @map("user_id")
+}
+model ProductOrder  {
+  id        String   @id @default(uuid())
+  
+ 
+  counterProduct       Int @default(0)
+  cost      Int @default(0)
+  order      Order  @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  orderId    String   @map("orderId")
+
+  product      Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  productId    String   @map("product_id")
 }
