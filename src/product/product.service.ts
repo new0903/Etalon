@@ -75,7 +75,7 @@ export class ProductService {
            filePath= `images/${timestamp}_${files[0].originalname}`;
            // savedImages.push(imagePath);
 
-            await fs.writeFile(`${__dirname}/../uploads/${filePath}`, files[0].buffer);
+            await fs.writeFile(`${__dirname}/../../uploads/${filePath}`, files[0].buffer);
         }
         const categoryM=await this.prismaService.category.findFirst({where:{id:data.categoryId}})
         console.log(categoryM)
