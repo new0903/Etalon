@@ -14,13 +14,13 @@ datasource db {
 }
 
 model User {
-  id        String   @id @default(uuid())
-  email String   @unique
-  login String   @unique
-  password String   @unique
-  acessTokenLastSerial Int   @default(0)
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
+  id                   String                @id @default(uuid())
+  email                String                @unique
+  login                String                @unique
+  password             String                @unique
+  acessTokenLastSerial Int                   @default(0)
+  createdAt            DateTime              @default(now()) @map("created_at")
+  updatedAt            DateTime              @updatedAt @map("updated_at")
   historyProductsUser  HistoryProductsUser[]
   refreshToken         RefreshToken[]
 }
@@ -32,42 +32,56 @@ model RefreshToken {
   token     String   @unique
   expDate   DateTime @default(now())
 
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId    String   @map("user_id")
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String @map("user_id")
 }
 
 model Category {
-  id        String   @id @default(uuid())
-  name String   @unique
-  products      Product[]
+  id       String    @id @default(uuid())
+  name     String    @unique
+  products Product[]
+}
+
+model HistoryProductsUser {
+  id String @id @default(uuid())
+
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  productId String  @map("product_id")
+  user      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String  @map("user_id")
+}
+
+model UserOrder {
+  id         String             @id @default(uuid())
+  userToken  String
+  totalPrice Int
+  products   UserOrderProduct[] // связь через промежуточную таблицу
+}
+
+model UserOrderProduct {
+  id          String    @id @default(uuid())
+  product     Product   @relation(fields: [productId], references: [id], onDelete: Cascade)
+  productId   String    @map("product_id")
+  userOrder   UserOrder @relation(fields: [userOrderId], references: [id], onDelete: Cascade)
+  userOrderId String    @map("user_order_id")
 }
 
 model Product {
-  id        String   @id @default(uuid())
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
-  deletedAt DateTime?  @map("deleted_at")
-  title     String
-  article     String
-  properties      String
-  ImgUrls  String?
-  priceDef     Int @default(0)
-  priceNDS     Int @default(0)
-  inStock     Int @default(0)
-  min       Int @default(0)
-  max       Int @default(0)
-  category      Category     @relation(fields: [categoryId], references: [id], onDelete: Cascade)
-  categoryId    String   @map("category_id")
-  historyProductsUser  HistoryProductsUser[]
-}
-
-
-model HistoryProductsUser  {
-  id        String   @id @default(uuid())
-  
- 
-  product      Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
-  productId    String   @map("product_id")
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId    String   @map("user_id")
+  id                  String                @id @default(uuid())
+  createdAt           DateTime              @default(now()) @map("created_at")
+  updatedAt           DateTime              @updatedAt @map("updated_at")
+  deletedAt           DateTime?             @map("deleted_at")
+  title               String
+  article             String
+  properties          String
+  ImgUrls             String?
+  priceDef            Int                   @default(0)
+  priceNDS            Int                   @default(0)
+  inStock             Int                   @default(0)
+  min                 Int                   @default(0)
+  max                 Int                   @default(0)
+  category            Category              @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  categoryId          String                @map("category_id")
+  historyProductsUser HistoryProductsUser[]
+  userOrderProducts   UserOrderProduct[]
 }

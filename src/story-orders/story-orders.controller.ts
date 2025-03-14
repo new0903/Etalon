@@ -1,4 +1,13 @@
-import { Body, Controller, Delete, Get, Param, Post, Put, Query } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Put,
+  Query,
+} from '@nestjs/common';
 import { StoryOrdersService } from './story-orders.service';
 import { CreateStoryOrderDTO } from './dto/create.story-order.tdo';
 import { UpdateStoryOrderDTO } from './dto/update.story-order.tdo';
@@ -8,26 +17,35 @@ import { JwtPayload } from 'src/interfaces/jwt-payload.interface';
 
 @Controller('story')
 export class StoryOrdersController {
-    constructor(private readonly storyOrderService: StoryOrdersService){}
+  constructor(private readonly storyOrderService: StoryOrdersService) {}
 
-    @Public()
-    @Post('create')
-    async CreateStoryOrdersController(@Body() data: CreateStoryOrderDTO, @CurrentUser() jwtPayload: JwtPayload ) {
-        return this.storyOrderService.CreateStoryOrder(data)
-    }
-    
-    @Put('update')
-    async UpdateStoryOrdersController(@Body() data: UpdateStoryOrderDTO, @CurrentUser() jwtPayload: JwtPayload) {
-        return this.storyOrderService.UpdateStoryOrder(data)
-    }
+  @Public()
+  @Post('create')
+  async CreateStoryOrdersController(
+    @Body() data: CreateStoryOrderDTO,
+    @CurrentUser() jwtPayload: JwtPayload,
+  ) {
+    return this.storyOrderService.CreateStoryOrder(data);
+  }
 
-    @Delete('delete/:id')
-    async DeleteStoryOrdersController(@Param('id') id: string, @CurrentUser() jwtPayload: JwtPayload) {
-        return this.storyOrderService.DeleteStoryOrder(id)
-    }
+  @Put('update')
+  async UpdateStoryOrdersController(
+    @Body() data: UpdateStoryOrderDTO,
+    @CurrentUser() jwtPayload: JwtPayload,
+  ) {
+    return this.storyOrderService.UpdateStoryOrder(data);
+  }
 
-    @Get('all')
-    async GetStoryOrdersController(@Query('Id') Id?: string) {
-        return this.storyOrderService.GetOneStoryOrderOfAll(Id)
-    }
+  @Delete('delete/:id')
+  async DeleteStoryOrdersController(
+    @Param('id') id: string,
+    @CurrentUser() jwtPayload: JwtPayload,
+  ) {
+    return this.storyOrderService.DeleteStoryOrder(id);
+  }
+
+  @Get('all')
+  async GetStoryOrdersController(@Query('Id') Id?: string) {
+    return this.storyOrderService.GetOneStoryOrderOfAll(Id);
+  }
 }
