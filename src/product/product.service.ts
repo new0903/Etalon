@@ -4,6 +4,7 @@ import { CreateProductDTO } from './dto/create.product.dto';
 import { UpdateProductDTO } from './dto/update.product.dto';
 import { join } from 'path';
 import { JwtPayload } from 'src/interfaces/jwt-payload.interface';
+import * as fs from 'fs/promises';
 
 
 @Injectable()
@@ -18,11 +19,18 @@ export class ProductService {
       // });
  //     if (jwtPayload.acessToken == userCurrent.refreshToken[0].token) {
         console.log(__dirname)
-        console.log(files[0].path)
-        console.log(join(__dirname, '..', '..', 'uploads', files[0].filename))
         var url="none";
         if (files!=null) {
-            url= join(__dirname, '..', '..', 'uploads', files[0].filename)
+          console.log(files[0])
+          //  url= join(__dirname, '..', '..', 'uploads', files[0].filename)
+            const timestamp = new Date().toISOString().replace(/[-:.]/g, '');
+        //    const imagePath = `images/${timestamp}_${files[0].originalname}`;
+            url= `${timestamp}_${files[0].originalname}`;
+            console.log("url: "+url)
+           // savedImages.push(imagePath);
+
+           console.log("url: "+`${__dirname}/../../uploads/${url}`)
+            await fs.writeFile(`${__dirname}/../../uploads/${url}`, files[0].buffer);
         }
         const categoryM=await this.prismaService.category.findFirst({where:{name:data.categoryId}})
 
@@ -60,9 +68,14 @@ export class ProductService {
         let productOld=await this.prismaService.product.findFirst({ where: { id: data.id } })
         console.log(productOld)
         let filePath = productOld.ImgUrls;
-        console.log(filePath)
-        if (files.length > 0) {
-          filePath = join(__dirname, '..', '..', 'uploads', files[0].filename)
+        if (files!=null) {
+          //  url= join(__dirname, '..', '..', 'uploads', files[0].filename)
+            const timestamp = new Date().toISOString().replace(/[-:.]/g, '');
+        //    const imagePath = `images/${timestamp}_${files[0].originalname}`;
+           filePath= `images/${timestamp}_${files[0].originalname}`;
+           // savedImages.push(imagePath);
+
+            await fs.writeFile(`${__dirname}/../uploads/${filePath}`, files[0].buffer);
         }
         const categoryM=await this.prismaService.category.findFirst({where:{id:data.categoryId}})
         console.log(categoryM)

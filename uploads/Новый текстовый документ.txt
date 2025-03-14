@@ -1,0 +1,6 @@
+D:\VS2010Test\Nest\Etalon\server\uploads\ 41
+
+SELECT `product`.`ImgUrls`  FROM `product`;
+SELECT * FROM `product` WHERE `product`.`ImgUrls` LIKE '%S2010Tes%';
+SELECT * FROM `product` WHERE `product`.`ImgUrls` LIKE '%\VS2010Test\Nest\Etalon\server\upload%';
+/*UPDATE `product` SET `product`.`ImgUrls` = REPLACE(`product`.`ImgUrls`, 'D:\VS2010Test\Nest\Etalon\server\uploads','') WHERE `product`.`ImgUrls` LIKE '%S2010Tes%';*/

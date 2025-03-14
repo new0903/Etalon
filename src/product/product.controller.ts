@@ -27,19 +27,8 @@ export class ProductController {
   constructor(private readonly productService: ProductService) { }
 
   @Post('create')
-  @UseInterceptors(
-    FilesInterceptor('files', 20, {
-      storage: diskStorage({
-        destination: './uploads/',
-        filename: (req, file, cb) => {
-          const uniqueSuffix = Date.now() + '-' + Math.round(Math.random());
-          cb(null, file.fieldname + '-' + uniqueSuffix + extname(file.originalname)); // Генерация уникального имени файла
-        },
-
-      }),
-    }),
-  )
-  async CreateProductController(@Body() data: CreateProductDTO, @UploadedFiles() files, @CurrentUser() jwtPayload: JwtPayload) {
+  @UseInterceptors(FilesInterceptor('files'))
+  async CreateProductController(@Body() data: CreateProductDTO, @UploadedFiles() files:any, @CurrentUser() jwtPayload: JwtPayload) {
     console.log(data)
     console.log(jwtPayload)
     console.log(files)
@@ -47,19 +36,8 @@ export class ProductController {
   }
 
   @Put('update')
-  @UseInterceptors(
-    FilesInterceptor('files', 20, {
-      storage: diskStorage({
-        destination: './uploads/',
-        filename: (req, file, cb) => {
-          const uniqueSuffix = Date.now() + '-' + Math.round(Math.random());
-          cb(null, file.fieldname + '-' + uniqueSuffix + extname(file.originalname)); // Генерация уникального имени файла
-        },
-
-      }),
-    }),
-  )
-  async UpdateProductController(@Body() data: UpdateProductDTO, @UploadedFiles() files, @CurrentUser() jwtPayload: JwtPayload) {
+  @UseInterceptors(FilesInterceptor('files'))
+  async UpdateProductController(@Body() data: UpdateProductDTO, @UploadedFiles() files:any, @CurrentUser() jwtPayload: JwtPayload) {
     return this.productService.UpdateProduct(data, files, jwtPayload);
   }
 
