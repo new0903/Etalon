@@ -2,6 +2,7 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateStoryOrderDTO } from './dto/create.story-order.tdo';
 import { UpdateStoryOrderDTO } from './dto/update.story-order.tdo';
+import { JwtPayload } from 'src/interfaces/jwt-payload.interface';
 
 @Injectable()
 export class StoryOrdersService {
@@ -59,7 +60,10 @@ export class StoryOrdersService {
         include: { product: true, user: true },
       });
     } catch (error) {
-      return error;
+      throw new HttpException(
+        'Error GetOneStoryOrderOfAll',
+        HttpStatus.NOT_FOUND,
+      );
     }
   }
 }
