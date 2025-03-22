@@ -13,6 +13,7 @@ export class StoryOrdersController {
     
     @Post('create')
     async CreateStoryOrdersController(@Body() data: CreateStoryOrderDTO, @CurrentUser() jwtPayload: JwtPayload ) {
+        console.log(data)
         return this.storyOrderService.CreateStoryOrder(data,jwtPayload)
     }
     

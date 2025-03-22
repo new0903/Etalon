@@ -6,4 +6,4 @@ SELECT * FROM `product` WHERE `product`.`ImgUrls` LIKE '%\VS2010Test\Nest\Etalon
 /*UPDATE `product` SET `product`.`ImgUrls` = REPLACE(`product`.`ImgUrls`, 'D:\VS2010Test\Nest\Etalon\server\uploads','') WHERE `product`.`ImgUrls` LIKE '%S2010Tes%';*/
 
 
-git remote add origin https://github.com/new0903/test.git
+git remote add origin https://github.com/new0903/Etalon.git

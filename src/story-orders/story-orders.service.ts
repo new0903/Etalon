@@ -9,12 +9,15 @@ export class StoryOrdersService {
     constructor(private readonly prismaService: PrismaService) {}
 
     async CreateStoryOrder(data: CreateStoryOrderDTO, jwtPayload: JwtPayload) {
+      console.log("CreateStoryOrder")
         try {
+          console.log("curUser")
             var curUser=await this.prismaService.user.findFirst({
                 where: { email: jwtPayload.Email }
 
             });
 
+            console.log("newOrder")
             var newOrder= await this.prismaService.order.create({
               data:{
                 userId:curUser.id,
@@ -22,21 +25,44 @@ export class StoryOrdersService {
               }
             })
             const counter=data.Record.length
+            console.log(`productOrder and historyProductsUser ${newOrder.id}`)
+            console.log(`products ${data.Record}`)
             for (let i = 0; i < counter; i++) {
-              var productOrder=await this.prismaService.productOrder.create({
-                data:{
-                  orderId:newOrder.id,
-                  cost:data.Record[i].priceDef,
-                  productId:data.Record[i].id,
-                  counterProduct:data.Record[i].countProduct
-                }
-              })
-              var storyOrder= await this.prismaService.historyProductsUser.create({
+              console.log(`products ${data.Record[i]}`)
+              try {
+                await this.prismaService.productOrder.create({
+                  data:{
+                    orderId:newOrder.id,
+                    productId:data.Record[i].id,
+                    counterProduct:data.Record[i].countProduct,
+                    cost:data.Record[i].priceDef
+                    // orderId:newOrder.id,
+                    // cost:data.Record[i].priceDef,
+                    // productId:data.Record[i].id,
+                    // counterProduct:data.Record[i].countProduct
+                  }
+                })
+              } catch(e)
+              {
+
+                console.debug("Error for creating new productOrder")
+                throw new HttpException('Error for creating new storyorder', HttpStatus.NOT_FOUND);
+              }
+              
+              try {
+                
+              } catch(e)
+              {
+                await this.prismaService.historyProductsUser.create({
                   data: {
                     productId:data.Record[i].id,
                     userId:curUser.id,
                   }
               });
+                console.debug("Error for creating new historyProductsUser")
+                throw new HttpException('Error for creating new storyorder', HttpStatus.NOT_FOUND);
+              }
+              
             }
             
 
